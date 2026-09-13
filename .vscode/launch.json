@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "monkeyc",
+            "request": "launch",
+            "name": "Run FanFace (epix2pro47mm)",
+            "stopAtLaunch": false,
+            "device": "epix2pro47mm"
+        },
+        {
+            "type": "monkeyc",
+            "request": "launch",
+            "name": "Run FanFace (choose device)",
+            "stopAtLaunch": false,
+            "device": "${command:GetTargetDevice}"
+        }
+    ]
+}

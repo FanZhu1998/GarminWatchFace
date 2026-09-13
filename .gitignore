@@ -53,3 +53,15 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Connect IQ
+bin/
+*.prg
+*.prg.debug.xml
+*.iq
+*.der
+*.pem
+developer_key*
+.vscode/settings.json
+oracleJdk-26/
+tools/preview/.cache/

@@ -1,0 +1,7 @@
+{
+  "_comment": "Physical display geometry per Connect IQ device id. diameterMm is the active display diameter (1.3in = 33.02 mm). pageColor is the face's canvas color used to auto-detect the display inside the simulator window.",
+  "default": { "screenPx": 416, "diameterMm": 33.02, "pageColor": "#080e18" },
+  "epix2pro42mm": { "screenPx": 390, "diameterMm": 30.48, "pageColor": "#080e18", "name": "epix Pro (Gen 2) 42mm, 1.2in" },
+  "epix2pro47mm": { "screenPx": 416, "diameterMm": 33.02, "pageColor": "#080e18", "name": "epix Pro (Gen 2) 47mm, 1.3in" },
+  "epix2pro51mm": { "screenPx": 454, "diameterMm": 35.56, "pageColor": "#080e18", "name": "epix Pro (Gen 2) 51mm, 1.4in" }
+}

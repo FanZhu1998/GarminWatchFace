@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
+    <!--
+        FanFace - a training dashboard watch face for the epix Pro (Gen 2) family,
+        rendered in the visual language of fan-zhu.com.
+        Edit products/permissions with the "Monkey C: Edit ..." commands or by hand.
+    -->
+    <iq:application id="3f8c2b7e6a1d4c9f8e2b5a7d1c4e9f60" type="watchface" name="@Strings.AppName"
+                    entry="FanFaceApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="4.2.0">
+
+        <iq:products>
+            <iq:product id="epix2pro47mm"/>
+            <iq:product id="epix2pro42mm"/>
+            <iq:product id="epix2pro51mm"/>
+        </iq:products>
+
+        <iq:permissions>
+            <!-- subscribe to system complications: HR, Body Battery, Recovery, VO2max, Training Status, 5K -->
+            <iq:uses-permission id="ComplicationSubscriber"/>
+            <!-- resting HR, VO2max fallback -->
+            <iq:uses-permission id="UserProfile"/>
+        </iq:permissions>
+
+        <iq:languages>
+            <iq:language>eng</iq:language>
+        </iq:languages>
+
+        <iq:barrels>
+        </iq:barrels>
+
+    </iq:application>
+</iq:manifest>

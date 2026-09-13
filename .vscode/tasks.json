@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "FanFace: real-size preview (epix2pro47mm)",
+            "detail": "Mirrors the running simulator's display at its true 33 mm size. Esc closes; + / - zoom.",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile", "-ExecutionPolicy", "Bypass",
+                "-File", "${workspaceFolder}/tools/preview/RealSizePreview.ps1",
+                "-Device", "epix2pro47mm"
+            ],
+            "problemMatcher": [],
+            "presentation": { "reveal": "silent", "panel": "dedicated", "close": true },
+            "isBackground": true
+        },
+        {
+            "label": "FanFace: real-size snapshot (PNG)",
+            "detail": "Saves bin/realsize.png: the display at true size with ppi metadata.",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile", "-ExecutionPolicy", "Bypass",
+                "-File", "${workspaceFolder}/tools/preview/RealSizePreview.ps1",
+                "-Device", "epix2pro47mm",
+                "-Out", "${workspaceFolder}/bin/realsize.png"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
