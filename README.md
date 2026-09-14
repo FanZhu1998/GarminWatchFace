@@ -6,7 +6,7 @@ grid turn a wristful of training metrics into something that reads at a glance a
 finished product, not a sports HUD.
 
 <p align="center">
-  <img src="docs/preview.png" alt="FanFace on the epix Pro (Gen 2) 47 mm: date, time, training status, and a stats panel showing heart rate, Body Battery, and calories" width="360">
+  <img src="docs/preview-v2.png" alt="FanFace on the epix Pro (Gen 2) 47 mm: date, time, training status, and a stats panel showing heart rate, Body Battery, and calories" width="360">
   <br>
   <em>Rendered at true size on the 1.3-inch, 416 × 416 AMOLED display (sample data shown).</em>
 </p>
