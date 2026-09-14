@@ -60,11 +60,13 @@ so a busy day never breaks the layout.
 ```
 
 Vertical rhythm: the whole stack is centered in the circle (not sitting low), so the top does not read
-as dead space. Three even zones: date+time, coach+panel, footer+battery. The date is a tight eyebrow
-directly above the time. The middle zone is one framed stats panel whose top rule doubles as the coach
-line's underline, so there is a single strong divider rather than two faint ones; each cell's value and
-label are centered between the rules. Structural rules use a brighter steel (`Theme.GRID`) at 2 px so
-sections read at arm's length; only the intensity ring track stays intentionally faint.
+as dead space. Three even zones: date+time, coach+panel, footer+battery. The date+time pair rides high
+enough that the gap below the time (into the coach line) matches the gap below the panel (into the
+footer), so no zone feels crowded. The middle zone is one framed stats panel whose top rule doubles as
+the coach line's underline, so there is a single strong divider rather than two faint ones; each cell's
+value and label are centered between the rules. Structural rules use a brighter steel (`Theme.GRID`),
+stroked at `Layout.railPen` (~3 px, scaled to the screen) so sections read clearly at arm's length; only
+the intensity ring track stays intentionally faint.
 
 Always-on display shows the time only, in the receded accent tone on black, micro-shifted each minute.
 

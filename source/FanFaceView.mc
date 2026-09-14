@@ -191,7 +191,7 @@ class FanFaceView extends WatchUi.WatchFace {
     // The top rule also underlines the coach line, so the lower third reads as one crisp block.
     private function drawRail(dc as Dc, l as Layout) as Void {
         dc.setColor(Theme.GRID, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(2);
+        dc.setPenWidth(l.railPen);
         dc.drawLine(l.railX0, l.railTop,    l.railX1, l.railTop);
         dc.drawLine(l.railX0, l.railBottom, l.railX1, l.railBottom);
         // verticals inset a few px from the rules so the corners read as a drawn frame, not a box
