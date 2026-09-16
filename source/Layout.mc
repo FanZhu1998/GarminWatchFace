@@ -50,7 +50,7 @@ class Layout {
         yTime    = frac(h, 0.30);        // hero, lifted to clear the coach line below it
         secGap   = frac(w, 0.028);
 
-        yCoach   = frac(h, 0.485);       // header sitting just above the panel's top rule
+        yCoach   = frac(h, 0.472);       // header bridging the time and the panel, even air on both sides
 
         // stats panel: 0.74 W wide so a 4-glyph value fits each cell; corners stay inside the ring.
         // value and label are centered between the two rules (equal space above the number and
@@ -66,7 +66,7 @@ class Layout {
         xCells = [cx - frac(w, 0.2467), cx, cx + frac(w, 0.2467)] as Array<Number>;
 
         yFooter = frac(h, 0.825);
-        yBattery = frac(h, 0.905);
+        yBattery = frac(h, 0.89);        // even cadence with the footer; settles the base off the bottom edge
         dotSize = frac(w, 0.03);
         dotGap = frac(w, 0.025);
 

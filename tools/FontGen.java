@@ -12,15 +12,31 @@ import javax.imageio.ImageIO;
  * plus an SVG path exporter for the launcher icon.
  *
  *   FontGen info    <ttf> <sizePx>
- *   FontGen bmfont  <ttf> <sizePx> <chars> <outBase> <tracking> [base,lineHeight]
+ *   FontGen bmfont  <ttf> <sizePx> <chars> <outBase> <tracking> [base,lineHeight] [tab] [s<width>]
  *   FontGen svgpath <ttf> <sizePx> <text> [tracking]
+ *
+ * Trailing bmfont options (any order): a "base,lineHeight" pair overrides the vertical metrics;
+ * the literal "tab" forces tabular figures (every digit 0-9 gets the widest digit's advance,
+ * centered) so per-second / per-minute digits do not jitter with a proportional typeface;
+ * "s<width>" (e.g. s1.2) faux-bolds glyphs by stroking the outline that many pixels, for a weight
+ * between the font's Regular and Bold when no intermediate weight exists.
  */
 public class FontGen {
     public static void main(String[] a) throws Exception {
         System.setProperty("java.awt.headless", "true");
         switch (a[0]) {
             case "info":    info(a[1], Float.parseFloat(a[2])); break;
-            case "bmfont":  bmfont(a[1], Float.parseFloat(a[2]), unescape(a[3]), a[4], Integer.parseInt(a[5]), a.length > 6 ? a[6] : null); break;
+            case "bmfont": {
+                String metrics = null; boolean tab = false; double stroke = 0;
+                for (int i = 6; i < a.length; i++) {
+                    if (a[i].equals("tab")) { tab = true; }
+                    else if (a[i].contains(",")) { metrics = a[i]; }
+                    else if (a[i].startsWith("s")) { stroke = Double.parseDouble(a[i].substring(1)); }
+                    // "-" (or anything else) is ignored
+                }
+                bmfont(a[1], Float.parseFloat(a[2]), unescape(a[3]), a[4], Integer.parseInt(a[5]), metrics, tab, stroke);
+                break;
+            }
             case "svgpath": svgpath(a[1], Float.parseFloat(a[2]), unescape(a[3]), a.length > 4 ? Float.parseFloat(a[4]) : 0f); break;
             default: throw new IllegalArgumentException("mode");
         }
@@ -59,9 +75,10 @@ public class FontGen {
         }
     }
 
-    static class G { int cp; Shape outline; Rectangle box; int adv; int x, y; }
+    static class G { int cp; Shape outline; Rectangle box; int adv; int xoffAdj; int x, y; }
 
-    static void bmfont(String ttf, float size, String chars, String outBase, int tracking, String metricsOverride) throws Exception {
+    static void bmfont(String ttf, float size, String chars, String outBase, int tracking, String metricsOverride, boolean tabular, double stroke) throws Exception {
+        int sp = (stroke > 0) ? (int) Math.ceil(stroke / 2.0) : 0;   // extra glyph-box padding for the stroke
         Font f = load(ttf, size);
         List<G> gs = new ArrayList<>();
         int minTop = Integer.MAX_VALUE, maxBottom = Integer.MIN_VALUE;
@@ -80,8 +97,8 @@ public class FontGen {
                 g.box = new Rectangle(0, 0, 1, 1);
                 g.outline = null;
             } else {
-                int x0 = (int) Math.floor(b.getX()) - 1, y0 = (int) Math.floor(b.getY()) - 1;
-                int x1 = (int) Math.ceil(b.getMaxX()) + 1, y1 = (int) Math.ceil(b.getMaxY()) + 1;
+                int x0 = (int) Math.floor(b.getX()) - 1 - sp, y0 = (int) Math.floor(b.getY()) - 1 - sp;
+                int x1 = (int) Math.ceil(b.getMaxX()) + 1 + sp, y1 = (int) Math.ceil(b.getMaxY()) + 1 + sp;
                 g.box = new Rectangle(x0, y0, x1 - x0, y1 - y0);
                 minTop = Math.min(minTop, y0);
                 maxBottom = Math.max(maxBottom, y1);
@@ -95,6 +112,19 @@ public class FontGen {
         } else {
             base = -minTop;                       // tight: line top = tallest glyph top
             lineHeight = base + Math.max(0, maxBottom);
+        }
+
+        // Tabular figures: give every digit the widest digit's advance, centered, so changing
+        // numbers do not shift horizontally. Letters and punctuation stay proportional.
+        if (tabular) {
+            int maxDigitAdv = 0;
+            for (G g : gs) { if (g.cp >= '0' && g.cp <= '9') { maxDigitAdv = Math.max(maxDigitAdv, g.adv); } }
+            for (G g : gs) {
+                if (g.cp >= '0' && g.cp <= '9') {
+                    g.xoffAdj = (maxDigitAdv - g.adv) / 2;
+                    g.adv = maxDigitAdv;
+                }
+            }
         }
 
         // shelf pack, tallest first
@@ -125,6 +155,10 @@ public class FontGen {
             gr.setColor(Color.WHITE);
             gr.translate(-g.box.x, -g.box.y);
             gr.fill(g.outline);
+            if (stroke > 0) {                        // faux-bold: thicken strokes ~stroke/2 px each side
+                gr.setStroke(new BasicStroke((float) stroke, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+                gr.draw(g.outline);
+            }
             gr.dispose();
             for (int yy = 0; yy < g.box.height; yy++) for (int xx = 0; xx < g.box.width; xx++) {
                 int a = (cell.getRGB(xx, yy) >>> 24) & 0xff;
@@ -140,7 +174,7 @@ public class FontGen {
         sb.append(String.format("page id=0 file=\"%s\"\n", png));
         sb.append(String.format("chars count=%d\n", gs.size()));
         for (G g : gs) {
-            int xoff = (g.outline == null) ? 0 : g.box.x;
+            int xoff = (g.outline == null) ? 0 : g.box.x + g.xoffAdj;
             int yoff = (g.outline == null) ? 0 : base + g.box.y;
             sb.append(String.format("char id=%d x=%d y=%d width=%d height=%d xoffset=%d yoffset=%d xadvance=%d page=0 chnl=15\n",
                 g.cp, g.x, g.y, g.box.width, g.box.height, xoff, yoff, g.adv));

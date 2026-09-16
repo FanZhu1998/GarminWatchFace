@@ -17,11 +17,11 @@ class FanFaceView extends WatchUi.WatchFace {
     private var _pressedCell as Number = -1;
 
     // Bitmap fonts (resources/fonts). System fonts are placeholders until onLayout.
-    private var _fTimeLight as FontType = Graphics.FONT_NUMBER_HOT;   // time
+    private var _fTime as FontType = Graphics.FONT_NUMBER_HOT;   // time
     private var _fValue as FontType = Graphics.FONT_MEDIUM;           // rail values
     private var _fSec as FontType = Graphics.FONT_SMALL;              // seconds
-    private var _fMono26 as FontType = Graphics.FONT_TINY;            // date, coach line
-    private var _fMono22 as FontType = Graphics.FONT_XTINY;           // rail labels, footer, battery row
+    private var _fHead as FontType = Graphics.FONT_TINY;            // date, coach line
+    private var _fLabel as FontType = Graphics.FONT_XTINY;           // rail labels, footer, battery row
 
     function initialize() {
         WatchFace.initialize();
@@ -42,11 +42,11 @@ class FanFaceView extends WatchUi.WatchFace {
 
     function onLayout(dc as Dc) as Void {
         _l = new Layout(dc.getWidth(), dc.getHeight());
-        _fTimeLight = WatchUi.loadResource(Rez.Fonts.LF_Light_112) as FontResource;
-        _fValue     = WatchUi.loadResource(Rez.Fonts.LF_Semi_42)   as FontResource;
-        _fSec       = WatchUi.loadResource(Rez.Fonts.Mono_30)      as FontResource;
-        _fMono26    = WatchUi.loadResource(Rez.Fonts.Mono_26)      as FontResource;
-        _fMono22    = WatchUi.loadResource(Rez.Fonts.Mono_22)      as FontResource;
+        _fTime = WatchUi.loadResource(Rez.Fonts.TimeFont) as FontResource;
+        _fValue     = WatchUi.loadResource(Rez.Fonts.ValueFont)   as FontResource;
+        _fSec       = WatchUi.loadResource(Rez.Fonts.SecFont)      as FontResource;
+        _fHead    = WatchUi.loadResource(Rez.Fonts.HeadFont)      as FontResource;
+        _fLabel    = WatchUi.loadResource(Rez.Fonts.LabelFont)      as FontResource;
     }
 
     function onShow() as Void {
@@ -107,7 +107,7 @@ class FanFaceView extends WatchUi.WatchFace {
         var dx = (c.min % 3) - 1;
         var dy = ((c.min / 3) % 3) - 1;
         dc.setColor(Theme.ACCENT_2, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(l.cx + dx, l.cy + dy, _fTimeLight, Fmt.time(c),
+        dc.drawText(l.cx + dx, l.cy + dy, _fTime, Fmt.time(c),
                     Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 
@@ -139,27 +139,29 @@ class FanFaceView extends WatchUi.WatchFace {
         var g = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
         var s = (g.day_of_week as String).toUpper() + " · " + (g.month as String).toUpper() + " " + g.day;
         dc.setColor(Theme.MUTED, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(l.cx, l.yDate, _fMono26, s, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(l.cx, l.yDate, _fHead, s, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 
-    // ---- Time: Libre Franklin Light, hours and minutes in one weight. ----
+    // ---- Time: DIN 1451 (D-DIN Regular), hours and minutes in one weight. ----
     // The time and seconds fonts are digits-only with no descender, so aligning bottoms aligns baselines.
     private function drawTime(dc as Dc, l as Layout, c as System.ClockTime) as Void {
         var hh = Fmt.hours(c) + ":";
         var mm = c.min.format("%02d");
-        var wH = dc.getTextWidthInPixels(hh, _fTimeLight);
-        var wM = dc.getTextWidthInPixels(mm, _fTimeLight);
-        var hT = dc.getFontHeight(_fTimeLight);
+        var wH = dc.getTextWidthInPixels(hh, _fTime);
+        var wM = dc.getTextWidthInPixels(mm, _fTime);
+        var hT = dc.getFontHeight(_fTime);
         var x0 = l.cx - (wH + wM) / 2;
         var yTop = l.yTime - hT / 2;
 
         dc.setColor(Theme.INK, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(x0, yTop, _fTimeLight, hh + mm, Graphics.TEXT_JUSTIFY_LEFT);
+        dc.drawText(x0, yTop, _fTime, hh + mm, Graphics.TEXT_JUSTIFY_LEFT);
 
         if (_showSeconds && !_lowPower) {
-            var hS = dc.getFontHeight(_fSec);
+            // vertically centered against the time so the small numeral reads as an integrated unit,
+            // not a superscript sunk to the lower-right
             dc.setColor(Theme.ACCENT_2, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(x0 + wH + wM + l.secGap, yTop + hT - hS, _fSec, c.sec.format("%02d"), Graphics.TEXT_JUSTIFY_LEFT);
+            dc.drawText(x0 + wH + wM + l.secGap, l.yTime, _fSec, c.sec.format("%02d"),
+                        Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         }
     }
 
@@ -177,13 +179,13 @@ class FanFaceView extends WatchUi.WatchFace {
         var colors = [Fmt.statusColor(status), Theme.MUTED, recReady ? Theme.BULL : Theme.MUTED] as Array<Number>;
         var total = 0;
         for (var i = 0; i < parts.size(); i++) {
-            total += dc.getTextWidthInPixels(parts[i], _fMono26);
+            total += dc.getTextWidthInPixels(parts[i], _fHead);
         }
         var x = l.cx - total / 2;
         for (var i = 0; i < parts.size(); i++) {
             dc.setColor(colors[i], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(x, l.yCoach, _fMono26, parts[i], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-            x += dc.getTextWidthInPixels(parts[i], _fMono26);
+            dc.drawText(x, l.yCoach, _fHead, parts[i], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+            x += dc.getTextWidthInPixels(parts[i], _fHead);
         }
     }
 
@@ -210,20 +212,20 @@ class FanFaceView extends WatchUi.WatchFace {
         dc.setColor((i == _pressedCell) ? Theme.ACCENT_HI : color, Graphics.COLOR_TRANSPARENT);
         dc.drawText(x, l.yValue, _fValue, value, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         dc.setColor(Theme.MUTED, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(x, l.yLabel, _fMono22, label, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(x, l.yLabel, _fLabel, label, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 
     // ---- Footer: VO2 / 5K, then the timeline "now" dot + battery + notifications, centered as a group ----
     private function drawFooter(dc as Dc, l as Layout) as Void {
         var s = "VO2 " + Fmt.num(_m.vo2Run) + " · 5K " + Fmt.mmss(_m.pred5kSec);
         dc.setColor(Theme.MUTED, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(l.cx, l.yFooter, _fMono22, s, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(l.cx, l.yFooter, _fLabel, s, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         var b = _m.batteryPct.toString() + "%";
         if (_m.notifications > 0) {
             b += " · " + _m.notifications.toString();
         }
-        var wB = dc.getTextWidthInPixels(b, _fMono22);
+        var wB = dc.getTextWidthInPixels(b, _fLabel);
         var x0 = l.cx - (l.dotSize + l.dotGap + wB) / 2;
         var dotX = x0 + l.dotSize / 2;
 
@@ -238,6 +240,6 @@ class FanFaceView extends WatchUi.WatchFace {
             dc.drawCircle(dotX, l.yBattery, l.dotSize / 4);
         }
         dc.setColor((_m.batteryPct <= 15) ? Theme.BEAR : Theme.MUTED, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(x0 + l.dotSize + l.dotGap, l.yBattery, _fMono22, b, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(x0 + l.dotSize + l.dotGap, l.yBattery, _fLabel, b, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 }

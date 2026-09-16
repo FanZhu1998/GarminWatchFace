@@ -29,15 +29,10 @@ module Fmt {
         return (v / 1000).toString() + "K";
     }
 
-    // Calories burned: raw under 1000 (e.g. 850), else K with one decimal, rounded (2300 -> 2.3K).
-    // Four decades of daily burn (hundreds to a few thousand) stay within four glyphs; a rare five-
-    // figure value drops the decimal so it never overruns the cell.
+    // Calories burned: shown as the exact integer (e.g. 850, 2345). A day's burn stays within four
+    // digits, which fits the rail cell in the tabular value font.
     function kcal(v as Number?) as String {
-        if (v == null) { return "--"; }
-        if (v < 1000) { return v.toString(); }
-        if (v >= 10000) { return ((v + 500) / 1000).toString() + "K"; }
-        var tenths = (v + 50) / 100;                 // hundreds of a K, rounded half up
-        return (tenths / 10).toString() + "." + (tenths % 10).toString() + "K";
+        return (v == null) ? "--" : v.toString();
     }
 
     function mmss(sec as Number?) as String {

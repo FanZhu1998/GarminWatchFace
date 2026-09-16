@@ -1,12 +1,18 @@
 <fonts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <!--
-        Bitmap fonts generated from Libre Franklin and IBM Plex Mono (both SIL OFL) with tools/FontGen.java.
-        Sizes are tuned for legibility on the 1.3in / 416 px epix Pro screen.
+        Bitmap fonts generated from D-DIN (a DIN 1451 revival, SIL OFL 1.1,
+        github.com/amcchord/datto-d-din) with tools/FontGen.java. See OFL.txt in this folder.
+        The generated face name is "FanFaceDIN" so the derivative does not carry D-DIN's
+        Reserved Font Name.
+
+        Font ids are ROLE-BASED, not typeface-based, so the typeface can be swapped in future by
+        regenerating these files without touching source. Digit-bearing fonts that update often
+        (value, seconds, label/footer) use tabular figures so DIN's proportional digits do not jitter.
         Every character the face ever draws must be in the filter, or it renders blank.
     -->
-    <font id="LF_Light_112" filename="lf_light_112.fnt" filter="0123456789:"      antialias="true"/>
-    <font id="LF_Semi_42"   filename="lf_semi_42.fnt"   filter="0123456789,.%-K"  antialias="true"/>
-    <font id="Mono_30"      filename="plex_30.fnt"      filter="0123456789"       antialias="true"/>
-    <font id="Mono_26"      filename="plex_26.fnt"      filter="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:.%-·— " antialias="true"/>
-    <font id="Mono_22"      filename="plex_22.fnt"      filter="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:.%-·— " antialias="true"/>
+    <font id="TimeFont"  filename="din_time.fnt"  filter="0123456789:"      antialias="true"/>
+    <font id="ValueFont" filename="din_value.fnt" filter="0123456789,.%-K"  antialias="true"/>
+    <font id="SecFont"   filename="din_sec.fnt"   filter="0123456789"       antialias="true"/>
+    <font id="HeadFont"  filename="din_head.fnt"  filter="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:.%-·— " antialias="true"/>
+    <font id="LabelFont" filename="din_label.fnt" filter="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:.%-·— " antialias="true"/>
 </fonts>

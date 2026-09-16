@@ -1,0 +1,48 @@
+info face="FanFaceDIN" size=24 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1 outline=0
+common lineHeight=23 base=18 scaleW=128 scaleH=128 pages=1 packed=0 alphaChnl=0 redChnl=4 greenChnl=4 blueChnl=4
+page id=0 file="din_label.png"
+chars count=43
+char id=65 x=61 y=25 width=16 height=19 xoffset=-1 yoffset=0 xadvance=15 page=0 chnl=15
+char id=66 x=78 y=25 width=15 height=19 xoffset=0 yoffset=0 xadvance=16 page=0 chnl=15
+char id=67 x=17 y=1 width=15 height=20 xoffset=0 yoffset=0 xadvance=16 page=0 chnl=15
+char id=68 x=94 y=25 width=15 height=19 xoffset=0 yoffset=0 xadvance=16 page=0 chnl=15
+char id=69 x=110 y=25 width=13 height=19 xoffset=0 yoffset=0 xadvance=14 page=0 chnl=15
+char id=70 x=1 y=46 width=13 height=19 xoffset=0 yoffset=0 xadvance=14 page=0 chnl=15
+char id=71 x=33 y=1 width=15 height=20 xoffset=0 yoffset=0 xadvance=16 page=0 chnl=15
+char id=72 x=15 y=46 width=15 height=19 xoffset=0 yoffset=0 xadvance=16 page=0 chnl=15
+char id=73 x=31 y=46 width=4 height=19 xoffset=1 yoffset=0 xadvance=7 page=0 chnl=15
+char id=74 x=36 y=46 width=8 height=19 xoffset=-1 yoffset=0 xadvance=9 page=0 chnl=15
+char id=75 x=45 y=46 width=16 height=19 xoffset=0 yoffset=0 xadvance=15 page=0 chnl=15
+char id=76 x=62 y=46 width=13 height=19 xoffset=0 yoffset=0 xadvance=14 page=0 chnl=15
+char id=77 x=76 y=46 width=18 height=19 xoffset=0 yoffset=0 xadvance=19 page=0 chnl=15
+char id=78 x=95 y=46 width=15 height=19 xoffset=0 yoffset=0 xadvance=17 page=0 chnl=15
+char id=79 x=49 y=1 width=15 height=20 xoffset=0 yoffset=0 xadvance=16 page=0 chnl=15
+char id=80 x=111 y=46 width=15 height=19 xoffset=0 yoffset=0 xadvance=15 page=0 chnl=15
+char id=81 x=1 y=1 width=15 height=23 xoffset=0 yoffset=0 xadvance=16 page=0 chnl=15
+char id=82 x=1 y=66 width=15 height=19 xoffset=0 yoffset=0 xadvance=15 page=0 chnl=15
+char id=83 x=65 y=1 width=14 height=20 xoffset=-1 yoffset=0 xadvance=14 page=0 chnl=15
+char id=84 x=17 y=66 width=14 height=19 xoffset=-1 yoffset=0 xadvance=13 page=0 chnl=15
+char id=85 x=80 y=1 width=15 height=20 xoffset=0 yoffset=0 xadvance=16 page=0 chnl=15
+char id=86 x=32 y=66 width=15 height=19 xoffset=-1 yoffset=0 xadvance=14 page=0 chnl=15
+char id=87 x=48 y=66 width=21 height=19 xoffset=-1 yoffset=0 xadvance=20 page=0 chnl=15
+char id=88 x=70 y=66 width=16 height=19 xoffset=-1 yoffset=0 xadvance=15 page=0 chnl=15
+char id=89 x=87 y=66 width=14 height=19 xoffset=-1 yoffset=0 xadvance=13 page=0 chnl=15
+char id=90 x=102 y=66 width=14 height=19 xoffset=-1 yoffset=0 xadvance=13 page=0 chnl=15
+char id=48 x=96 y=1 width=12 height=20 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=49 x=117 y=66 width=7 height=19 xoffset=2 yoffset=0 xadvance=13 page=0 chnl=15
+char id=50 x=1 y=86 width=11 height=19 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=51 x=109 y=1 width=12 height=20 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=52 x=13 y=86 width=12 height=19 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=53 x=1 y=25 width=12 height=20 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=54 x=14 y=25 width=12 height=20 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=55 x=26 y=86 width=12 height=19 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=56 x=27 y=25 width=12 height=20 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=57 x=39 y=86 width=12 height=19 xoffset=0 yoffset=0 xadvance=13 page=0 chnl=15
+char id=58 x=52 y=86 width=5 height=13 xoffset=0 yoffset=6 xadvance=6 page=0 chnl=15
+char id=46 x=58 y=86 width=5 height=5 xoffset=0 yoffset=14 xadvance=6 page=0 chnl=15
+char id=37 x=40 y=25 width=20 height=20 xoffset=0 yoffset=0 xadvance=21 page=0 chnl=15
+char id=45 x=64 y=86 width=10 height=5 xoffset=0 yoffset=7 xadvance=10 page=0 chnl=15
+char id=183 x=75 y=86 width=5 height=5 xoffset=0 yoffset=9 xadvance=6 page=0 chnl=15
+char id=8212 x=81 y=86 width=22 height=5 xoffset=-1 yoffset=7 xadvance=21 page=0 chnl=15
+char id=32 x=104 y=86 width=1 height=1 xoffset=0 yoffset=0 xadvance=6 page=0 chnl=15
+kernings count=0
